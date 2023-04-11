@@ -4,12 +4,16 @@
       <div class="left">
         <img [src]="bonus? '/assets/logo-bonus.svg':'/assets/logo.svg'" alt="rock-paper-scissor" style="height: 4em;">
       </div>
-      <div class="right">
+      <div class="right" [ngStyle]="{'width': phone ? '30%' : '10%'}">
         <h2>SCORE</h2>
         <h1 style="transform: translateY(-45%);color:#000000b2;">{{score}}</h1>
       </div>
     </div>
   </div>
+  <div>
+
+  </div>
+  <div *ngIf="!phone">
   <section style="transform: scale(95%);" *ngIf="!playing">
     <div class="container" *ngIf="!bonus">
       <img src="/assets/bg-triangle.svg" alt="">
@@ -52,11 +56,58 @@
     </div>
     <button class="repeat" (click)="playing=false">PLAY AGAIN</button>
   </section>
+</div>
+
+<div *ngIf="phone">
+  <section style="transform: scale(95%);" *ngIf="!playing">
+    <div class="container" *ngIf="!bonus">
+      <img src="/assets/bg-triangle.svg" alt="">
+      <img src="/assets/icon-scissors.svg" alt="" class="button" style="border-color: #FF4D4D; position: absolute; top:24%; right:0%" (click)="play(0)">
+      <img src="/assets/icon-paper.svg" alt="" class="button" style="border-color: #00B33C; position: absolute; top:24%; left:0%" (click)="play(1)">  
+      <img src="/assets/icon-rock.svg" alt="" class="button" style="border-color: #0077FF; position: absolute; top:64%; left:36%" (click)="play(2)">  
+    </div>
+    <div class="container" *ngIf="bonus">
+      <img src="/assets/bg-pentagon.svg" alt="">
+      <img src="/assets/icon-scissors.svg" alt="" class="button" style="border-color: #FF4D4D; position: absolute; top:22%; left:36%" (click)="play(0)">
+      <img src="/assets/icon-paper.svg" alt="" class="button" style="border-color: #00B33C; position: absolute; top:36.5%; right:0%" (click)="play(1)">  
+      <img src="/assets/icon-rock.svg" alt="" class="button" style="border-color: #0077FF; position: absolute; top:67%; right:12%" (click)="play(2)">  
+      <img src="/assets/icon-lizard.svg" alt="" class="button" style="border-color: #FFC300; position: absolute; top:67%; left:12%" (click)="play(3)">  
+      <img src="/assets/icon-spock.svg" alt="" class="button" style="border-color: #BF00FF; position: absolute; top:36.5%; left:0%" (click)="play(4)">
+    </div>
+  </section>
+  <section *ngIf="playing">
+    <div [ngSwitch]="playerpick" style="position: absolute;top: 25%;left:0%">
+      <h3>YOUR PICK</h3>
+      <div *ngSwitchCase="0"><img src="/assets/icon-scissors.svg" alt="" class="button" style="border-color: #FF4D4D;"></div>
+      <div *ngSwitchCase="1"><img src="/assets/icon-paper.svg" alt="" class="button" style="border-color: #00B33C;"></div>
+      <div *ngSwitchCase="2"><img src="/assets/icon-rock.svg" alt="" class="button" style="border-color: #0077FF;"></div>
+      <div *ngSwitchCase="3"><img src="/assets/icon-lizard.svg" alt="" class="button" style="border-color: #FFC300;"></div>
+      <div *ngSwitchCase="4"><img src="/assets/icon-spock.svg" alt="" class="button" style="border-color: #BF00FF;"></div>
+    </div>
+    <div [ngSwitch]="housepick" style="position: absolute;top: 25%;right:0%">
+      <h3>HOUSE PICK</h3>
+      <div *ngSwitchCase="0"><img src="/assets/icon-scissors.svg" alt="" class="button" style="border-color: #FF4D4D;"></div>
+      <div *ngSwitchCase="1"><img src="/assets/icon-paper.svg" alt="" class="button" style="border-color: #00B33C;"></div>
+      <div *ngSwitchCase="2"><img src="/assets/icon-rock.svg" alt="" class="button" style="border-color: #0077FF;"></div>
+      <div *ngSwitchCase="3"><img src="/assets/icon-lizard.svg" alt="" class="button" style="border-color: #FFC300;"></div>
+      <div *ngSwitchCase="4"><img src="/assets/icon-spock.svg" alt="" class="button" style="border-color: #BF00FF;"></div>
+    </div>
+    <div *ngIf="housepick==playerpick" class="container">
+      <h1>DRAW</h1>
+    </div>
+    <div *ngIf="housepick!=playerpick" class="container">
+      <h1 *ngIf="!win">THE HOUSE WINS</h1>
+      <h1 *ngIf="win">YOU WIN</h1>
+    </div>
+    <button class="repeat" (click)="playing=false" style="top:80%;left:25%;right:25%">PLAY AGAIN</button>
+  </section>
+</div>
+
   <label class="switch">
     <input type="checkbox" id="mySwitch" (click)="mode()">
     <span class="slider"><p style="transform: translate(-100%,-36%);opacity: 0.9;font-size: small;color: white;">EXPAND</p></span>
   </label>
-  <button (click)="openModal()" class="rules-btn">RULES</button>
+  <button (click)="openModal()" class="rules-btn" [ngStyle]="{'top': phone ? '95%' : '90%','left': phone ? '43%' : '55%'}">RULES</button>
 </body>
 <div class="modal-overlay" [class.open]="showModal" (click)="closeModal()">
   <div class="modal-container">

@@ -1,20 +1,22 @@
-import { Component } from '@angular/core';
-import { HotObservable } from 'rxjs/internal/testing/HotObservable';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'rock-paper-scissor';
   bonus=false;
+  phone=false;
   score=0;
   housepick=0;
   playing=false;
   playerpick=0;
   win=false;
-
+  ngOnInit(): void {
+    this.phone=window.screen.width<768;
+  }
   mode(){
     this.bonus=!this.bonus;
   }
